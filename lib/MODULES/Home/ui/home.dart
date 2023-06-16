@@ -34,24 +34,23 @@ class _HomeState extends State<Home> {
 /* -------------------------------------------------------------------------- */
 
   structure() {
-    return SafeArea(
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/spacebg.png'),
-            fit: BoxFit.fill,
-          ),
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/images/spacebg.png'),
+          fit: BoxFit.fill,
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            einstienCard(),
-            testYourSkillsHereText(),
-            addTile(),
-            gradientTile(),
-          ],
-        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+          einstienCard(),
+          testYourSkillsHereText(),
+          addTile(),
+          gradientTile(),
+        ],
       ),
     );
   }
