@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:math_quiz1/MODULES/ADDITION/ui/addition_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:math_quiz1/MODULES/COMMON/logic/cubit/score_cubit.dart';
+import 'package:math_quiz1/MODULES/QUIZ/quiz_screen.dart';
+import 'package:math_quiz1/MODULES/QUIZ/quiz_singleton.dart';
+
+import '../../CONSTANTS/image_paths.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -9,16 +14,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-/* -------------------------------------------------------------------------- */
-/*                               //! Declarations                              */
-/* -------------------------------------------------------------------------- */
-
-//
-
-/* -------------------------------------------------------------------------- */
-/*                                  //! Build                                 */
-/* -------------------------------------------------------------------------- */
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,19 +33,31 @@ class _HomeState extends State<Home> {
       height: MediaQuery.of(context).size.height,
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/spacebg.png'),
+          image: AssetImage(ImagePaths.spaceBg),
           fit: BoxFit.fill,
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-          einstienCard(),
-          testYourSkillsHereText(),
-          addTile(),
-          gradientTile(),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            einstienCard(),
+            testYourSkillsHereText(),
+            const SizedBox(height: 10),
+
+            commonTile(
+                1, 'Addition', 'Addition of two numbers', const QuizScreen()),
+            commonTile(2, 'Subtraction', 'Subtraction of two numbers',
+                const QuizScreen()),
+            commonTile(3, 'Multiplication', 'Multiplcation of two numbers',
+                const QuizScreen()),
+            commonTile(
+                4, 'Division', 'Division of two numbers', const QuizScreen()),
+            // gradientTile(),
+            const SizedBox(height: 60)
+          ],
+        ),
       ),
     );
   }
@@ -128,9 +135,9 @@ class _HomeState extends State<Home> {
     );
   }
 
-  addTile() {
+  commonTile(int index, String title, String subtitle, navToScreen) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+      padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
       child: SizedBox(
         // height: 150,
         width: double.infinity,
@@ -154,12 +161,12 @@ class _HomeState extends State<Home> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Addition',
+                  Text(
+                    title,
                     // maxLines: 2,
                     // overflow: TextOverflow.ellipsis,
                     // textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       // decoration: TextDecoration.none,
                       // fontStyle: FontStyle.italic,
@@ -173,12 +180,12 @@ class _HomeState extends State<Home> {
                   //
                   const SizedBox(height: 5),
 
-                  const Text(
-                    "Addiiton of two number.",
+                  Text(
+                    subtitle,
                     // maxLines: 2,
                     // overflow: TextOverflow.ellipsis,
                     // textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xffFF1F73),
                       // decoration: TextDecoration.none,
                       // fontStyle: FontStyle.italic,
@@ -191,7 +198,7 @@ class _HomeState extends State<Home> {
 
                   //
 
-                  playButton(),
+                  playButton(index, navToScreen),
                 ],
               ),
             )),
@@ -199,13 +206,24 @@ class _HomeState extends State<Home> {
     );
   }
 
-  playButton() {
+  playButton(int index, navToScreen) {
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
       child: GestureDetector(
         onTap: () {
+          // BlocProvider.of<ScoreCubit>(context).resetScore();
+          index == 1
+              ? QuizSingleton.o.setType('addition')
+              : index == 2
+                  ? QuizSingleton.o.setType('subtraction')
+                  : index == 3
+                      ? QuizSingleton.o.setType('multiplication')
+                      : index == 4
+                          ? QuizSingleton.o.setType('division')
+                          : QuizSingleton.o.setType('addition');
+
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const AdditionScreen();
+            return navToScreen;
           }));
         },
         child: Container(

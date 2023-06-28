@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:math_quiz1/MODULES/COMMON/logic/cubit/score_cubit.dart';
+import 'package:math_quiz1/MODULES/QUIZ/bloc/quiz_bloc.dart';
 
-import 'MODULES/ADDITION/logic/addition_logic/addition_bloc.dart';
-import 'MODULES/Home/ui/home.dart';
+import 'MODULES/Home/home.dart';
 
 void main() {
   runApp(const MainApp());
@@ -13,8 +14,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => AdditionBloc(),
+    return MultiBlocProvider(
+      providers: [
+        //@ CUBIT
+        // BlocProvider(create: (context) => ScoreCubit()),
+
+        //@ BLOCS
+        BlocProvider(create: (context) => QuizBloc()),
+      ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Home(),
