@@ -50,6 +50,7 @@ class _HomeState extends State<Home> {
                 1, 'Addition', 'Addition of two numbers', const QuizScreen()),
             commonTile(2, 'Subtraction', 'Subtraction of two numbers',
                 const QuizScreen()),
+
             commonTile(3, 'Multiplication', 'Multiplcation of two numbers',
                 const QuizScreen()),
             commonTile(

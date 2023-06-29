@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
+import 'package:advance_animated_progress_indicator/advance_animated_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:math_quiz1/MODULES/COMMON/logic/cubit/score_cubit.dart';
@@ -50,10 +52,12 @@ class _Structure extends StatelessWidget {
     return BlocListener<ScoreCubit, int>(
         listener: (context, scoreState) {
           if (scoreState > 9) {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) {
-              return const ResultsScreen();
-            }));
+            Future.delayed(Duration(seconds: 1), () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return const ResultsScreen();
+              }));
+            });
           }
         },
         child: BlocListener<QuizBloc, QuizState>(
@@ -74,7 +78,7 @@ class _Structure extends StatelessWidget {
           child: Container(
             height: MediaQuery.of(context).size.height,
             decoration: const BoxDecoration(
-              color: Colors.amber,
+              // color: Colors.amber,
               image: DecorationImage(
                   image: AssetImage(ImagePaths.spaceBg), fit: BoxFit.fill),
             ),
@@ -88,13 +92,38 @@ class _Structure extends StatelessWidget {
                     const GradientTileWidget(child: _DisplayQuestion()),
                     const SizedBox(height: 30),
                     const GradientTileWidget(child: _DisplayOptionsList()),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
+                    _Loader(),
                   ],
                 ),
               ),
             ),
           ),
         ));
+  }
+}
+
+class _Loader extends StatelessWidget {
+  const _Loader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ScoreCubit, int>(
+      builder: (context, count) {
+        print(count);
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 80.0),
+          child: AnimatedLinearProgressIndicator(
+            indicatorColor: Colors.white,
+            percentage: count / 10,
+            animationDuration: const Duration(seconds: 1),
+            label: '',
+            indicatorBackgroundColor: Color.fromARGB(255, 174, 147, 185),
+            labelStyle: TextStyle(color: Colors.white),
+          ),
+        );
+      },
+    );
   }
 }
 

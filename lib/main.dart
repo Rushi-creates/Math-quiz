@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:math_quiz1/MODULES/COMMON/logic/cubit/score_cubit.dart';
 import 'package:math_quiz1/MODULES/QUIZ/bloc/quiz_bloc.dart';
+import 'package:math_quiz1/MODULES/SPLASH/splash_screen.dart';
 
 import 'MODULES/Home/home.dart';
 
@@ -24,7 +25,7 @@ class MainApp extends StatelessWidget {
       ],
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Home(),
+        home: SplashScreen(),
       ),
     );
   }
