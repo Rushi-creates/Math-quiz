@@ -52,25 +52,25 @@ class _ResultsScreenState extends State<ResultsScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // BlocBuilder<ScoreCubit, int>(
-              //   builder: (context, state) {
-              //     return Text(
-              //       'Your Score: $state',
-              //       // maxLines: 2,
-              //       // overflow: TextOverflow.ellipsis,
-              //       // textAlign: TextAlign.center,
-              //       style: const TextStyle(
-              //         color: Colors.white,
-              //         // decoration: TextDecoration.none,
-              //         // fontStyle: FontStyle.italic,
-              //         // fontFamily: "FontNameHere" ,
-              //         fontWeight: FontWeight.bold,
-              //         // fontWeight: FontWeight.w300,
-              //         fontSize: 25.0,
-              //       ),
-              //     );
-              //   },
-              // ),
+              BlocBuilder<ScoreCubit, int>(
+                builder: (context, state) {
+                  return Text(
+                    'Your Score: $state',
+                    // maxLines: 2,
+                    // overflow: TextOverflow.ellipsis,
+                    // textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      // decoration: TextDecoration.none,
+                      // fontStyle: FontStyle.italic,
+                      // fontFamily: "FontNameHere" ,
+                      fontWeight: FontWeight.bold,
+                      // fontWeight: FontWeight.w300,
+                      fontSize: 25.0,
+                    ),
+                  );
+                },
+              ),
               const GradientPinkButtonWidget(
                 navToScreen: Home(),
                 text: 'Go back home',

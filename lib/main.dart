@@ -17,7 +17,7 @@ class MainApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         //@ CUBIT
-        // BlocProvider(create: (context) => ScoreCubit()),
+        BlocProvider(create: (context) => ScoreCubit()),
 
         //@ BLOCS
         BlocProvider(create: (context) => QuizBloc()),

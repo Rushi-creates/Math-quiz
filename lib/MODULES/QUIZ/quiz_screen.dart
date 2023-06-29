@@ -30,55 +30,10 @@ class _QuizScreenState extends State<QuizScreen> {
     return const Scaffold(
       // resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      // appBar: myHeader(),
-      body:
-          // Text('hi'),
-          _Structure(),
-    );
-  }
-
-/* -------------------------------------------------------------------------- */
-/*                                 //@ appbar                                 */
-/* -------------------------------------------------------------------------- */
-
-  AppBar myHeader() {
-    return AppBar(
-      backgroundColor: Colors.white,
-      centerTitle: true,
-      // elevation: 0.0,
-      //leading: IconButton(
-      //  icon: Icon(
-      //   Icons.arrow_back,
-      //   color: Colors.black,
-      //   ),
-      //   onPressed: (){
-      //       Navigator.pop(context);
-      //   }
-      // ),
-      // automaticallyImplyLeading: true,  //removes default back arrow on appbar
-
-      title: const Text(
-        'Test', //give here appBar title
-        style: TextStyle(color: Colors.black
-            // fontWeight: FontWeight.bold
-            // fontSize: 15,
-            ),
-      ),
-      //actions: [
-
-      //  Padding(
-      //    padding: const EdgeInsets.all(8.0),
-      //   child: IconButton(
-      //       onPressed: null,
-      //       icon: Icon(
-      //         Icons.search,
-      //         color: Colors.black,
-      //       )), )
-      // ],
+      body: _Structure(),
     );
   }
 }
-
 /* -------------------------------------------------------------------------- */
 /*                                     //                                     */
 /* -------------------------------------------------------------------------- */
@@ -92,56 +47,54 @@ class _Structure extends StatelessWidget {
 /*                                //@ listener                                */
 /* -------------------------------------------------------------------------- */
 
-    return
-        //  BlocListener<ScoreCubit, int>(
-        //   listener: (context, scoreState) {
-        //     if (scoreState > 3) {
-        //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-        //         return const ResultsScreen();
-        //       }));
-        //     }
-        //   },
-        // child:
-        BlocListener<QuizBloc, QuizState>(
-      listener: (context, state) {
-        if (state is IsAnswerCorrectState) {
-          // BlocProvider.of<ScoreCubit>(context).incrementScore();
-          Future.delayed(const Duration(seconds: 1)).then((value) {
-            BlocProvider.of<QuizBloc>(context)
-                .add(GenerateQuestionEvent(QuizSingleton.o.type));
-          });
-        }
-      },
+    return BlocListener<ScoreCubit, int>(
+        listener: (context, scoreState) {
+          if (scoreState > 9) {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return const ResultsScreen();
+            }));
+          }
+        },
+        child: BlocListener<QuizBloc, QuizState>(
+          listener: (context, state) {
+            if (state is IsAnswerCorrectState) {
+              BlocProvider.of<ScoreCubit>(context).incrementScore();
+              Future.delayed(const Duration(milliseconds: 500)).then((value) {
+                BlocProvider.of<QuizBloc>(context)
+                    .add(GenerateQuestionEvent(QuizSingleton.o.type));
+              });
+            }
+          },
 
-      /* -------------------------------------------------------------------------- */
-      /*                                     //@                                    */
-      /* -------------------------------------------------------------------------- */
+          /* -------------------------------------------------------------------------- */
+          /*                                     //@                                    */
+          /* -------------------------------------------------------------------------- */
 
-      child: Container(
-        height: MediaQuery.of(context).size.height,
-        decoration: const BoxDecoration(
-          color: Colors.amber,
-          image: DecorationImage(
-              image: AssetImage(ImagePaths.spaceBg), fit: BoxFit.fill),
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const _CustomHeader(),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.05),
-                const GradientTileWidget(child: _DisplayQuestion()),
-                const SizedBox(height: 30),
-                const GradientTileWidget(child: _DisplayOptionsList()),
-                const SizedBox(height: 10),
-              ],
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: const BoxDecoration(
+              color: Colors.amber,
+              image: DecorationImage(
+                  image: AssetImage(ImagePaths.spaceBg), fit: BoxFit.fill),
+            ),
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const _CustomHeader(),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+                    const GradientTileWidget(child: _DisplayQuestion()),
+                    const SizedBox(height: 30),
+                    const GradientTileWidget(child: _DisplayOptionsList()),
+                    const SizedBox(height: 10),
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-      // ),
-    );
+        ));
   }
 }
 
@@ -194,26 +147,25 @@ class _CustomHeader extends StatelessWidget {
           ),
         ),
         const Spacer(),
-        // BlocBuilder<ScoreCubit, int>(
-        //   builder: (context, count) {
-        //     return
-        Padding(
-          padding: const EdgeInsets.only(right: 25.0),
-          child: Text(
-            '/10',
-            style: const TextStyle(
-              color: Colors.white,
-              // decoration: TextDecoration.none,
-              // fontStyle: FontStyle.italic,
-              // fontFamily: "FontNameHere" ,
-              fontWeight: FontWeight.bold,
-              // fontWeight: FontWeight.w300,
-              fontSize: 20.0,
-            ),
-          ),
+        BlocBuilder<ScoreCubit, int>(
+          builder: (context, count) {
+            return Padding(
+              padding: const EdgeInsets.only(right: 25.0),
+              child: Text(
+                '$count/10',
+                style: const TextStyle(
+                  color: Colors.white,
+                  // decoration: TextDecoration.none,
+                  // fontStyle: FontStyle.italic,
+                  // fontFamily: "FontNameHere" ,
+                  fontWeight: FontWeight.bold,
+                  // fontWeight: FontWeight.w300,
+                  fontSize: 20.0,
+                ),
+              ),
+            );
+          },
         ),
-        //   },
-        // ),
       ],
     );
   }

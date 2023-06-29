@@ -211,7 +211,7 @@ class _HomeState extends State<Home> {
       padding: const EdgeInsets.only(top: 15.0),
       child: GestureDetector(
         onTap: () {
-          // BlocProvider.of<ScoreCubit>(context).resetScore();
+          BlocProvider.of<ScoreCubit>(context).resetScore();
           index == 1
               ? QuizSingleton.o.setType('addition')
               : index == 2

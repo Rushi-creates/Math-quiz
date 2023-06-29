@@ -1,10 +1,10 @@
-// part of 'score_cubit.dart';
+part of 'score_cubit.dart';
 
-// abstract class ScoreState extends Equatable {
-//   const ScoreState();
+abstract class ScoreState extends Equatable {
+  const ScoreState();
 
-//   @override
-//   List<Object> get props => [];
-// }
+  @override
+  List<Object> get props => [];
+}
 
-// class ScoreInitial extends ScoreState {}
+class ScoreInitial extends ScoreState {}
